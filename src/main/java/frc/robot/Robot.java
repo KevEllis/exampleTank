@@ -4,10 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
  * This is a demo program showing the use of the RobotDrive class, specifically it contains the code
@@ -17,10 +18,10 @@ public class Robot extends TimedRobot {
   //private DifferentialDrive m_myRobot;
   //private XboxController m_leftStick;
   //private XboxController m_rightStick;
-  private XboxController control;
+  XboxController control = new XboxController(0);
   //motors
-  final Talon leftMotor = new Talon(3);
-  final Talon rightMotor = new Talon(4);
+  final TalonSRX leftMotor = new TalonSRX(3);
+  final TalonSRX rightMotor = new TalonSRX(4);
   @Override
   public void robotInit() {
     //m_myRobot = new DifferentialDrive(new Talon(4), new Talon(3));
@@ -31,7 +32,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY());
-    leftMotor.set(control.getRawAxis(1));
-    rightMotor.set(control.getRawAxis(5));
+    leftMotor.set(ControlMode.PercentOutput, -control.getRawAxis(1));
+    rightMotor.set(ControlMode.PercentOutput, control.getRawAxis(5));
   }
 }
